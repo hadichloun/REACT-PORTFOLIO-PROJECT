@@ -1,4 +1,3 @@
-  
 import React, { Component } from "react";
 import axios from "axios";
 
@@ -10,7 +9,8 @@ export default class PortfolioManager extends Component {
     super();
 
     this.state = {
-      portfolioItems: []
+      portfolioItems: [],
+      portfolioToEdit: {}
     };
 
     this.handleSuccessfulFormSubmission = this.handleSuccessfulFormSubmission.bind(
@@ -18,10 +18,33 @@ export default class PortfolioManager extends Component {
     );
     this.handleFormSubmissionError = this.handleFormSubmissionError.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
+    this.handleEditClick = this.handleEditClick.bind(this);
+  }
+
+  handleEditClick(portfolioItem) {
+    this.setState({
+      portfolioToEdit: portfolioItem
+    });
   }
 
   handleDeleteClick(portfolioItem) {
-    console.log("handleDeleteClick", portfolioItem);
+    axios
+      .delete(
+        `https://api.devcamp.space/portfolio/portfolio_items/${portfolioItem.id}`,
+        { withCredentials: true }
+      )
+      .then(response => {
+        this.setState({
+          portfolioItems: this.state.portfolioItems.filter(item => {
+            return item.id !== portfolioItem.id;
+          })
+        });
+
+        return response.data;
+      })
+      .catch(error => {
+        console.log("handleDeleteClick error", error);
+      });
   }
 
   handleSuccessfulFormSubmission(portfolioItem) {
@@ -70,6 +93,7 @@ export default class PortfolioManager extends Component {
           <PortfolioSidebarList
             handleDeleteClick={this.handleDeleteClick}
             data={this.state.portfolioItems}
+            handleEditClick={this.handleEditClick}
           />
         </div>
       </div>
