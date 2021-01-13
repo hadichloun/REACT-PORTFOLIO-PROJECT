@@ -1,4 +1,3 @@
-  
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
@@ -27,7 +26,6 @@ export default class PortfolioItem extends Component {
         onMouseEnter={() => this.handleMouseEnter()}
         onMouseLeave={() => this.handleMouseLeave()}
       >
-      
         <div
           className={
             "portfolio-img-background " + this.state.portfolioItemClass
