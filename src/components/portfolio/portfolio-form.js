@@ -299,7 +299,7 @@ export default class PortfolioForm extends Component {
               djsConfig={this.djsConfig()}
               eventHandlers={this.handleLogoDrop()}
             >
-              <div className="dz-message">Logo</div> 
+              <div className="dz-message">Logo</div>
             </DropzoneComponent>
           )}
         </div>
